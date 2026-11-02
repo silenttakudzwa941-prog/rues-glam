@@ -1,6 +1,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import {
   FiArrowDownRight,
   FiArrowRight,
@@ -321,7 +322,7 @@ export default function Home() {
                       style={
                         {
                           "--card-delay": `${serviceIndex * 120}ms`,
-                        } as React.CSSProperties
+                        } as CSSProperties
                       }
                     >
                       <div className="service-image-wrap">
