@@ -775,3 +775,359 @@ button {
     align-items: flex-start;
   }
 }
+
+/* =========================================
+   RUE'S GLAM — PREMIUM EXPERIENCE
+========================================= */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+::selection {
+  background: #d4af37;
+  color: #111111;
+}
+
+/* HERO ENTRANCE */
+
+.hero-eyebrow {
+  animation: fadeUp 0.8s ease both;
+}
+
+.hero-content h1 {
+  animation: fadeUp 1s ease 0.12s both;
+}
+
+.hero-description {
+  animation: fadeUp 1s ease 0.24s both;
+}
+
+.hero-actions {
+  animation: fadeUp 1s ease 0.36s both;
+}
+
+.hero-bottom {
+  animation: fadeUp 1s ease 0.48s both;
+}
+
+/* CATEGORY SECTIONS */
+
+.service-category {
+  margin-top: 75px;
+}
+
+.category-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 35px;
+  margin-bottom: 28px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid rgba(201, 162, 39, 0.3);
+}
+
+.category-title-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.category-number {
+  font-family: serif;
+  font-size: 43px;
+  color: #c9a227;
+  line-height: 1;
+}
+
+.category-subtitle {
+  display: block;
+  color: #a58b52;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 7px;
+}
+
+.category-heading h3 {
+  margin: 0;
+  font-family: Georgia, serif;
+  font-size: clamp(25px, 3vw, 35px);
+  font-weight: 400;
+  color: #1a1a1a;
+}
+
+.category-heading > p {
+  max-width: 390px;
+  color: #77716b;
+  font-size: 13px;
+  line-height: 1.8;
+  margin: 0;
+}
+
+/* PREMIUM SERVICE CARDS */
+
+.premium-service-card {
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid rgba(201, 162, 39, 0.12);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.035);
+  animation: cardEntrance 0.8s ease both;
+  animation-delay: var(--card-delay, 0ms);
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease,
+    border-color 0.4s ease;
+}
+
+.premium-service-card:hover {
+  transform: translateY(-9px);
+  border-color: rgba(201, 162, 39, 0.6);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.1);
+}
+
+.premium-service-card .service-image-wrap {
+  overflow: hidden;
+  position: relative;
+}
+
+.premium-service-card .service-image {
+  transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.premium-service-card:hover .service-image {
+  transform: scale(1.09);
+}
+
+.service-image-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 12, 9, 0.2);
+  color: #ffffff;
+  font-size: 28px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.premium-service-card:hover .service-image-overlay {
+  opacity: 1;
+}
+
+.premium-service-card .service-card-content {
+  padding: 23px;
+}
+
+.service-category-label {
+  display: inline-block;
+  color: #a58b52;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.7px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.premium-service-card .service-card-content h4 {
+  color: #171717;
+  font-family: Georgia, serif;
+  font-size: 21px;
+  font-weight: 400;
+  margin: 0 0 10px;
+}
+
+.premium-service-card .service-card-content p {
+  color: #77716b;
+  font-size: 13px;
+  line-height: 1.8;
+  min-height: 70px;
+}
+
+.premium-service-card .service-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  color: #a58b52;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: gap 0.3s ease, color 0.3s ease;
+}
+
+.premium-service-card .service-link:hover {
+  gap: 17px;
+  color: #111111;
+}
+
+/* SECTION DETAILS */
+
+.services-section {
+  background: #faf9f6;
+}
+
+.category-heading,
+.services-heading {
+  animation: fadeUp 0.8s ease both;
+}
+
+.about-preview {
+  position: relative;
+  overflow: hidden;
+}
+
+.about-preview::before {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border: 1px solid rgba(212, 175, 55, 0.16);
+  border-radius: 50%;
+  top: -120px;
+  right: -90px;
+  pointer-events: none;
+}
+
+.gallery-placeholder {
+  position: relative;
+  overflow: hidden;
+}
+
+.gallery-placeholder::after {
+  content: "";
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 50%;
+  bottom: -120px;
+  left: -100px;
+  pointer-events: none;
+}
+
+/* BUTTON EFFECTS */
+
+.primary-button,
+.secondary-button,
+.header-book,
+.footer-booking {
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.primary-button:hover,
+.header-book:hover,
+.footer-booking:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(201, 162, 39, 0.2);
+}
+
+.secondary-button:hover {
+  transform: translateY(-3px);
+}
+
+/* FLOATING WHATSAPP */
+
+.floating-book {
+  animation: floatButton 3s ease-in-out infinite;
+}
+
+/* FOOTER */
+
+.footer-socials a {
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    color 0.3s ease;
+}
+
+.footer-socials a:hover {
+  transform: translateY(-5px) rotate(5deg);
+}
+
+/* KEYFRAMES */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatButton {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* MOBILE RESPONSIVENESS */
+
+@media (max-width: 768px) {
+  .service-category {
+    margin-top: 55px;
+  }
+
+  .category-heading {
+    display: block;
+  }
+
+  .category-heading > p {
+    margin-top: 17px;
+  }
+
+  .category-number {
+    font-size: 34px;
+  }
+
+  .category-heading h3 {
+    font-size: 26px;
+  }
+
+  .premium-service-card .service-card-content {
+    padding: 19px;
+  }
+
+  .premium-service-card .service-card-content p {
+    min-height: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
