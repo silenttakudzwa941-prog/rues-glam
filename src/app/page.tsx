@@ -1,525 +1,85 @@
+"use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import type { CSSProperties } from "react";
-import {
-  FiArrowDownRight,
-  FiArrowRight,
-  FiMenu,
-  FiStar,
-  FiInstagram,
-  FiFacebook,
-  FiMusic,
-  FiMessageCircle,
-} from "react-icons/fi";
+import { useState } from "react";
 
-const whatsappLink =
-  "https://wa.me/263775700720?text=" +
-  encodeURIComponent(
-    "Hello Rue's Glam! I would like to enquire about your beauty services and make an appointment."
-  );
+const phone = "+263773917813";
+const whatsapp = (message: string) =>
+  `https://wa.me/263773917813?text=${encodeURIComponent(message)}`;
 
-const serviceCategories = [
-  {
-    number: "01",
-    title: "Nail Artistry",
-    subtitle: "The art of beautiful details",
-    description:
-      "From timeless elegance to expressive designs, discover nail treatments that complement your individual style.",
-    items: [
-      {
-        title: "Nail Extensions",
-        description:
-          "Beautifully shaped extensions for a polished, sophisticated finish.",
-        image:
-          "https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=900&q=85",
-      },
-      {
-        title: "Gel Polish",
-        description:
-          "A sleek, glossy finish for effortlessly elegant nails.",
-        image:
-          "https://images.unsplash.com/photo-1610992015732-2449b76344bc?auto=format&fit=crop&w=900&q=85",
-      },
-      {
-        title: "Creative Nail Art",
-        description:
-          "Express your personality through creative colours and nail designs.",
-        image:
-          "https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=900&q=85",
-      },
-    ],
-  },
-  {
-    number: "02",
-    title: "Professional Makeup",
-    subtitle: "Make every moment unforgettable",
-    description:
-      "Whether understated or glamorous, discover makeup looks designed to celebrate your natural beauty.",
-    items: [
-      {
-        title: "Soft Glam",
-        description:
-          "A beautifully balanced look for effortless everyday elegance.",
-        image:
-          "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=900&q=85",
-      },
-      {
-        title: "Bridal Makeup",
-        description:
-          "Elegant bridal beauty for one of life's most memorable occasions.",
-        image:
-          "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=85",
-      },
-      {
-        title: "Occasion Makeup",
-        description:
-          "A glamorous finish for celebrations, parties and special events.",
-        image:
-          "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=900&q=85",
-      },
-    ],
-  },
-  {
-    number: "03",
-    title: "Wig Installations",
-    subtitle: "Confidence in every strand",
-    description:
-      "Discover polished wig styling and installation services designed to complete your look.",
-    items: [
-      {
-        title: "Frontal Installation",
-        description:
-          "A carefully styled installation for a seamless-looking finish.",
-        image:
-          "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=85",
-      },
-      {
-        title: "Wig Customisation",
-        description:
-          "Personalised wig preparation to complement your preferred style.",
-        image:
-          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=85",
-      },
-      {
-        title: "Wig Styling",
-        description:
-          "Finishing touches and styling to bring your desired look together.",
-        image:
-          "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=85",
-      },
-    ],
-  },
-  {
-    number: "04",
-    title: "Eyelash Extensions",
-    subtitle: "Let your eyes make a statement",
-    description:
-      "Enhance your eyes with lash looks ranging from subtle definition to glamorous finishes.",
-    items: [
-      {
-        title: "Natural Lash Look",
-        description:
-          "Soft-looking lashes for a subtle and graceful enhancement.",
-        image:
-          "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=900&q=85",
-      },
-      {
-        title: "Volume Lashes",
-        description:
-          "A fuller lash appearance for an expressive, glamorous finish.",
-        image:
-          "https://images.unsplash.com/photo-1500840216050-6ffa99d75160?auto=format&fit=crop&w=900&q=85",
-      },
-      {
-        title: "Glam Lash Look",
-        description:
-          "A statement-making lash style for those special occasions.",
-        image:
-          "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=900&q=85",
-      },
-    ],
-  },
-  {
-    number: "05",
-    title: "Permanent Eyebrows",
-    subtitle: "Beautifully defined, effortlessly confident",
-    description:
-      "Explore brow enhancement options designed around your features and preferred aesthetic.",
-    items: [
-      {
-        title: "Brow Shaping",
-        description:
-          "Thoughtful brow shaping to complement your natural features.",
-        image:
-          "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=900&q=85",
-      },
-      {
-        title: "Brow Enhancement",
-        description:
-          "Defined brows with a look tailored to your personal preference.",
-        image:
-          "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=900&q=85",
-      },
-      {
-        title: "Permanent Brow Enquiry",
-        description:
-          "Enquire about available permanent eyebrow treatments and options.",
-        image:
-          "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=85",
-      },
-    ],
-  },
+const photos = [
+  { name: "Celebration cakes", category: "Cakes", src: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1100&q=85", ratio: "aspect-[4/5]" },
+  { name: "Cupcake treats", category: "Cupcakes", src: "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=1100&q=85", ratio: "aspect-[4/5]" },
+  { name: "A little something sweet", category: "Bento boxes", src: "https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?auto=format&fit=crop&w=1100&q=85", ratio: "aspect-[4/5]" },
+  { name: "For the big moments", category: "Cakes", src: "https://images.unsplash.com/photo-1562777717-dc6984f65a63?auto=format&fit=crop&w=1100&q=85", ratio: "aspect-[4/5]" },
+  { name: "Sweet table inspiration", category: "Cupcakes", src: "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1100&q=85", ratio: "aspect-[4/5]" },
+  { name: "A cake to remember", category: "Cakes", src: "https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=1100&q=85", ratio: "aspect-[4/5]" },
 ];
 
+const menus = [
+  { name: "Classic cakes", description: "Your celebration, beautifully finished.", items: [["7 inch", "$40"], ["8 inch", "$50"], ["9 inch", "$60"], ["10 inch", "$70"], ["12 inch", "$80"]], note: "Final price depends on design and complexity." },
+  { name: "Cupcake boxes", description: "A little joy in every bite.", items: [["Box of 6", "$10"], ["Box of 12", "$20"], ["Box of 24", "$35"]], note: "Enquire about your preferred style." },
+  { name: "Sheet cakes", description: "Made for sharing the moment.", items: [["Small", "$35"], ["Medium", "$45"], ["Large", "$55"]], note: "Themed sheet cakes: add $5." },
+  { name: "Bento cake boxes", description: "A small cake, a big surprise.", items: [["6 inch + 2 cupcakes", "$20"], ["6 inch + 5 cupcakes", "$25"]], note: "Includes a 6-inch cake and cupcakes." },
+];
+
+const faqs = [
+  { q: "Can I request a custom cake design?", a: "Yes, send Mama Nene’s Cakes your inspiration, preferred size and celebration date on WhatsApp. The final price depends on the design and complexity." },
+  { q: "Are the prices final?", a: "The listed amounts are basic prices. Cake designs and complexity may affect the final quotation. Themed sheet cakes cost an additional $5." },
+  { q: "What if I need a cake urgently?", a: "For last-minute or emergency orders, please call 077 391 7813 directly to discuss availability." },
+  { q: "How do I start an order?", a: "Choose a cake category, then send your preferred size, design inspiration and required date on WhatsApp. Mama Nene’s Cakes can confirm the details directly." },
+];
+
+function Arrow({ diagonal = false }: { diagonal?: boolean }) {
+  return <span aria-hidden="true" className="inline-block transition-transform duration-300 group-hover:translate-x-1">{diagonal ? "↗" : "→"}</span>;
+}
+
 export default function Home() {
+  const [filter, setFilter] = useState("All");
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const visiblePhotos = filter === "All" ? photos : photos.filter((photo) => photo.category === filter);
+
   return (
-    <main>
-      <header className="site-header">
-        <div className="container header-inner">
-          <Link href="#home" className="brand" aria-label="Rue's Glam home">
-            <span className="brand-mark">R.</span>
-            <span className="brand-copy">
-              <span className="brand-name">RUE&apos;S GLAM</span>
-              <span className="brand-caption">
-                BEAUTY · ELEGANCE · CONFIDENCE
-              </span>
-            </span>
-          </Link>
-
-          <nav className="desktop-nav" aria-label="Main navigation">
-            <Link href="#home">Home</Link>
-            <Link href="#services">Services</Link>
-            <Link href="#about">About</Link>
-            <Link href="#gallery">Gallery</Link>
-          </nav>
-
-          <a
-            className="header-book"
-            href={whatsappLink}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Book an Appointment <FiArrowRight />
-          </a>
-
-          <a
-            className="mobile-menu"
-            href="#services"
-            aria-label="View services"
-          >
-            <FiMenu size={24} />
-          </a>
+    <main className="mn-sans min-h-screen overflow-x-hidden bg-[#fffaf6] text-[#392b30]">
+      <div className="bg-[#743c4b] px-4 py-2.5 text-center text-[10px] font-bold uppercase tracking-[.18em] text-white sm:text-xs">Made for life’s sweetest moments <span className="mx-3 text-[#f1b7c5]">✦</span> Harare, Zimbabwe</div>
+      <header className="sticky top-0 z-50 border-b border-[#eadbd5] bg-[#fffaf6]/95 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 md:px-10">
+          <a href="#home" className="group flex items-center gap-3" aria-label="Mama Nene's Cakes home"><span className="mn-logo mn-display flex h-11 w-11 items-center justify-center rounded-full border border-[#743c4b] text-2xl text-[#743c4b]">M</span><span><span className="mn-display block text-xl font-semibold leading-none md:text-2xl">mama nene’s</span><span className="mt-1 block text-[9px] font-bold uppercase tracking-[.35em] text-[#a4516a]">cakes & celebrations</span></span></a>
+          <nav className="hidden items-center gap-8 text-[12px] font-bold uppercase tracking-wider lg:flex"><a href="#collections" className="hover:text-[#a4516a]">Collections</a><a href="#gallery" className="hover:text-[#a4516a]">Gallery</a><a href="#prices" className="hover:text-[#a4516a]">Price list</a><a href="#how-to-order" className="hover:text-[#a4516a]">How to order</a><a href="#contact" className="hover:text-[#a4516a]">Contact</a></nav>
+          <a href={whatsapp("Hello Mama Nene's Cakes! I'd like to enquire about a cake order.")} target="_blank" rel="noopener noreferrer" className="mn-cta group inline-flex items-center gap-2 rounded-full bg-[#743c4b] px-4 py-3 text-xs font-bold text-white sm:px-6">Order a cake <Arrow diagonal /></a>
         </div>
       </header>
 
-      {/* HERO */}
-      <section className="hero" id="home">
-        <div className="hero-image" aria-hidden="true" />
-        <div className="hero-shade" aria-hidden="true" />
-
-        <div className="container hero-content">
-          <span className="eyebrow hero-eyebrow">
-            <FiStar /> YOUR BEAUTY DESTINATION
-          </span>
-
-          <h1>
-            Your Beauty.
-            <br />
-            Your Confidence.
-            <br />
-            <span>Your Glam.</span>
-          </h1>
-
-          <p className="hero-description">
-            Discover the art of feeling beautiful. From flawless makeup to
-            exquisite nail artistry, every detail is designed to bring out
-            your most confident self.
-          </p>
-
-          <div className="hero-actions">
-            <a href="#services" className="primary-button">
-              Explore Our Services <FiArrowRight />
-            </a>
-
-            <a
-              href={whatsappLink}
-              target="_blank"
-              rel="noreferrer"
-              className="secondary-button"
-            >
-              Book an Appointment
-            </a>
-          </div>
-
-          <div className="hero-bottom">
-            <span>EVERYDAY GLAM</span>
-            <span className="hero-bottom-line" />
-            <span>BRIDAL BEAUTY</span>
-            <span className="hero-bottom-line" />
-            <span>SPECIAL OCCASIONS</span>
-          </div>
-        </div>
-
-        <a
-          className="scroll-cue"
-          href="#services"
-          aria-label="Scroll to services"
-        >
-          <FiArrowDownRight />
-        </a>
-      </section>
-
-      {/* INTRODUCTION */}
-      <section className="services-section section-padding" id="services">
-        <div className="container">
-          <div className="services-heading">
-            <div>
-              <span className="eyebrow">THE RUE&apos;S GLAM EXPERIENCE</span>
-              <h2 className="section-heading">
-                A little luxury.
-                <br />
-                <span className="gold-text">A lot of confidence.</span>
-              </h2>
-            </div>
-
-            <p className="section-description">
-              Your beauty deserves thoughtful care and a personal touch.
-              Explore our services, created to help you look and feel your best.
-            </p>
-          </div>
-
-          {/* SERVICE CATEGORIES */}
-          <div className="service-categories">
-            {serviceCategories.map((category, categoryIndex) => (
-              <section
-                className="service-category"
-                key={category.number}
-                id={`category-${category.number}`}
-              >
-                <div className="category-heading">
-                  <div className="category-title-group">
-                    <span className="category-number">
-                      {category.number}
-                    </span>
-
-                    <div>
-                      <span className="category-subtitle">
-                        {category.subtitle}
-                      </span>
-                      <h3>{category.title}</h3>
-                    </div>
-                  </div>
-
-                  <p>{category.description}</p>
-                </div>
-
-                <div className="services-grid">
-                  {category.items.map((service, serviceIndex) => (
-                    <article
-                      className="service-card premium-service-card"
-                      key={service.title}
-                      style={
-                        {
-                          "--card-delay": `${serviceIndex * 120}ms`,
-                        } as CSSProperties
-                      }
-                    >
-                      <div className="service-image-wrap">
-                        <Image
-                          src={service.image}
-                          alt={`${service.title} beauty service`}
-                          fill
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          className="service-image"
-                        />
-
-                        <span className="service-number">
-                          {category.number}.{serviceIndex + 1}
-                        </span>
-
-                        <span className="service-image-overlay">
-                          <FiArrowRight />
-                        </span>
-                      </div>
-
-                      <div className="service-card-content">
-                        <span className="service-category-label">
-                          {category.title}
-                        </span>
-
-                        <h4>{service.title}</h4>
-                        <p>{service.description}</p>
-
-                        <a
-                          href={whatsappLink}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="service-link"
-                        >
-                          Enquire Now <FiArrowRight />
-                        </a>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              </section>
-            ))}
-          </div>
+      <section id="home" className="relative isolate overflow-hidden bg-[#f6e8e2]">
+        <div className="mn-blob pointer-events-none absolute -left-32 top-12 h-96 w-96 rounded-full bg-[#f5c8cb]/60 blur-3xl" />
+        <div className="mn-blob pointer-events-none absolute -right-32 bottom-0 h-96 w-96 rounded-full bg-[#f8d8b9]/50 blur-3xl" />
+        <div className="relative mx-auto grid min-h-[700px] max-w-7xl items-center gap-12 px-6 py-16 md:grid-cols-[.95fr_1.05fr] md:px-10 md:py-24">
+          <div className="mn-enter relative z-10"><p className="mb-6 text-xs font-bold uppercase tracking-[.3em] text-[#a4516a]">The sweetest part of your story</p><h1 className="mn-display text-[clamp(3.9rem,7.4vw,7.8rem)] leading-[.99] tracking-[-.06em]">Every cake<br />tells a <em className="mn-ink font-normal">story.</em></h1><p className="mt-8 max-w-md text-[15px] leading-8 text-[#705d62]">From milestone birthdays to little just-because surprises, find a cake worth gathering around. Beautiful moments deserve something sweet.</p><div className="mt-9 flex flex-wrap gap-3"><a href="#collections" className="mn-cta group inline-flex items-center gap-3 rounded-full bg-[#743c4b] px-7 py-4 text-sm font-bold text-white">Explore our cakes <Arrow /></a><a href="#prices" className="mn-cta group inline-flex items-center gap-3 rounded-full border border-[#743c4b] bg-white/70 px-7 py-4 text-sm font-bold text-[#743c4b]">View prices <Arrow /></a></div><div className="mt-14 flex items-center gap-4"><span className="h-px w-10 bg-[#ad7783]"/><span className="text-[10px] font-bold uppercase tracking-[.2em] text-[#97727a]">Cakes · Cupcakes · Bento boxes</span></div></div>
+          <div className="mn-enter-late relative mx-auto w-full max-w-[580px]"><div className="mn-halo absolute inset-[6%] rounded-full border border-dashed border-[#bb8593]/70"/><div className="mn-glow absolute inset-[10%] rounded-full bg-[#f4c4c9] blur-3xl"/><div className="mn-cake-frame relative mx-auto aspect-square w-[86%] overflow-hidden rounded-full border-[12px] border-white shadow-[0_30px_90px_#743c4b35]"><img className="mn-cake-photo h-full w-full object-cover" src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1400&q=90" alt="Celebration cake inspiration photograph" /></div><span aria-hidden="true" className="mn-star absolute left-[2%] top-[16%] text-4xl text-[#b77084]">✦</span><span aria-hidden="true" className="mn-star absolute right-[2%] bottom-[15%] text-3xl text-[#b77084]">✧</span><div className="mn-sticker mn-display absolute -right-2 top-12 rotate-12 rounded-full bg-[#743c4b] px-6 py-5 text-center text-xl italic leading-6 text-white shadow-xl">made<br/>with love</div><div className="mn-sticker absolute -bottom-5 left-0 -rotate-6 rounded-2xl bg-white px-6 py-4 text-center shadow-xl"><span className="block text-2xl text-[#b66d81]">♡</span><span className="text-xs font-bold text-[#743c4b]">Sweet moments</span></div></div>
         </div>
       </section>
 
-      {/* ABOUT */}
-      <section className="about-preview section-padding" id="about">
-        <div className="container about-preview-inner">
-          <span className="eyebrow">BEAUTY THAT FEELS LIKE YOU</span>
+      <div className="mn-ticker overflow-hidden border-y border-[#ebd8d2] bg-white py-5"><div className="mn-ticker-track flex w-max gap-14 whitespace-nowrap text-xs font-bold uppercase tracking-[.2em] text-[#8d5966]">{Array.from({ length: 4 }, (_, i) => <span key={i} aria-hidden={i > 0} className="flex gap-14"><span>✦ Celebration cakes</span><span>✦ Cupcake boxes</span><span>✦ Sheet cakes</span><span>✦ Bento boxes</span></span>)}</div></div>
 
-          <h2 className="section-heading">
-            More than a look.
-            <br />
-            <span className="gold-text">It&apos;s how you feel.</span>
-          </h2>
+      <section id="collections" className="mx-auto max-w-7xl px-6 py-24 md:px-10"><div className="mn-reveal mb-12 flex flex-wrap items-end justify-between gap-7"><div><p className="mn-kicker">The collections</p><h2 className="mn-display mt-4 text-5xl leading-tight md:text-7xl">Something sweet <em className="text-[#a4516a]">for everyone.</em></h2></div><p className="max-w-sm text-sm leading-8 text-[#806a6e]">From the grand celebration to the smallest surprise, explore the treats that make moments memorable.</p></div><div className="grid gap-6 md:grid-cols-3">{[
+        { name: "Celebration cakes", sub: "The centrepiece of your moment", image: photos[0].src, label: "01 / The classics", target: "Classic cakes" },
+        { name: "Cupcakes & treats", sub: "Little bites of happiness", image: photos[1].src, label: "02 / Small delights", target: "Cupcake boxes" },
+        { name: "Bento cake boxes", sub: "Thoughtful, cute and personal", image: photos[2].src, label: "03 / Sweet surprises", target: "Bento cake boxes" },
+      ].map((item) => <article key={item.name} className="mn-card mn-reveal group overflow-hidden rounded-[26px] bg-white shadow-[0_14px_45px_#743c4b12]"><div className="relative aspect-[4/4.6] overflow-hidden bg-[#f0dcd5]"><img src={item.image} alt={`${item.name} illustrative photograph`} className="mn-photo h-full w-full object-cover"/><div className="absolute inset-0 bg-gradient-to-t from-[#392b30]/30 to-transparent"/><span className="absolute left-5 top-5 rounded-full bg-white/95 px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-[#743c4b]">{item.label}</span><span className="absolute bottom-5 right-5 flex h-12 w-12 items-center justify-center rounded-full bg-white text-xl text-[#743c4b] transition-transform group-hover:-rotate-45">↗</span></div><div className="p-7"><h3 className="mn-display text-3xl">{item.name}</h3><p className="mt-2 text-sm text-[#8c7779]">{item.sub}</p><a href={whatsapp(`Hello Mama Nene's Cakes! I'd like to enquire about ${item.target.toLowerCase()}.`)} target="_blank" rel="noopener noreferrer" className="mt-6 inline-block border-b border-[#a4516a] pb-1 text-xs font-bold uppercase tracking-wider text-[#8d4c5f]">Enquire on WhatsApp ↗</a></div></article>)}</div></section>
 
-          <p className="section-description">
-            Rue&apos;s Glam is dedicated to enhancing your natural beauty
-            through professional, creative services for everyday moments,
-            special occasions and bridal celebrations.
-          </p>
+      <section className="relative overflow-hidden bg-[#743c4b] px-6 py-24 text-white md:px-10"><div className="mn-decor-circle pointer-events-none absolute -right-24 -top-40 h-[480px] w-[480px] rounded-full border-[65px] border-white/5"/><div className="relative mx-auto grid max-w-7xl items-center gap-12 md:grid-cols-[1.1fr_.9fr]"><div className="mn-reveal"><p className="mb-5 text-xs font-bold uppercase tracking-[.24em] text-[#f4c6cf]">Made for your moments</p><h2 className="mn-display text-5xl leading-[1.12] md:text-7xl">The cake is lovely.<br/><em className="text-[#ffd9df]">The memory lasts.</em></h2><p className="mt-7 max-w-xl text-base leading-8 text-[#f3e0e4]">Tell us about the celebration, the people you love and the design you have in mind. We’ll help you start the conversation about your perfect cake.</p><a href={whatsapp("Hello Mama Nene's Cakes! I have a custom cake design in mind. Can we discuss it?")} target="_blank" rel="noopener noreferrer" className="mn-cta group mt-8 inline-flex items-center gap-3 rounded-full bg-white px-7 py-4 text-sm font-bold text-[#743c4b]">Discuss a custom cake <Arrow /></a></div><div className="mn-reveal relative mx-auto w-full max-w-[410px]"><div className="mn-photo-tilt aspect-[4/4.8] overflow-hidden rounded-[180px_180px_26px_26px] border-[10px] border-white/20"><img className="h-full w-full object-cover" src="https://images.unsplash.com/photo-1562777717-dc6984f65a63?auto=format&fit=crop&w=1000&q=85" alt="Decorative cake inspiration"/></div><span className="mn-display absolute -bottom-7 -left-8 -rotate-12 rounded-full bg-[#f6d8d8] px-8 py-7 text-2xl italic text-[#743c4b] shadow-xl">oh, sweet!</span></div></div></section>
 
-          <a
-            href={whatsappLink}
-            target="_blank"
-            rel="noreferrer"
-            className="primary-button"
-          >
-            Let&apos;s Talk Beauty <FiArrowRight />
-          </a>
-        </div>
-      </section>
+      <section id="gallery" className="mx-auto max-w-7xl px-6 py-24 md:px-10"><div className="mn-reveal flex flex-wrap items-end justify-between gap-6"><div><p className="mn-kicker">The inspiration gallery</p><h2 className="mn-display mt-4 text-5xl md:text-7xl">A feast for <em className="text-[#a4516a]">the eyes.</em></h2></div><p className="max-w-sm text-sm leading-7 text-[#806a6e]">Browse visual inspiration while we prepare a gallery of Mama Nene’s own creations.</p></div><div className="mt-9 flex flex-wrap gap-2" role="group" aria-label="Filter gallery">{["All", "Cakes", "Cupcakes", "Bento boxes"].map((item) => <button key={item} type="button" onClick={() => setFilter(item)} aria-pressed={filter === item} className={`rounded-full border px-5 py-2.5 text-xs font-bold transition-all ${filter === item ? "border-[#743c4b] bg-[#743c4b] text-white" : "border-[#e5d1cd] bg-white text-[#743c4b] hover:bg-[#f9e9e4]"}`}>{item}</button>)}</div><div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{visiblePhotos.map((item) => <article key={item.name} className="mn-card group relative overflow-hidden rounded-[24px] bg-[#f1ddd6]"><div className={item.ratio}><img src={item.src} alt={`${item.name}, illustrative cake photograph`} className="mn-photo h-full w-full object-cover"/><div className="absolute inset-0 bg-gradient-to-t from-[#2c1a22]/75 via-transparent to-transparent"/><div className="absolute bottom-0 left-0 right-0 p-6 text-white"><p className="text-[10px] font-bold uppercase tracking-[.2em] text-[#ffe1e6]">{item.category}</p><h3 className="mn-display mt-2 text-2xl">{item.name}</h3></div></div></article>)}</div><p className="mt-6 text-center text-xs leading-6 text-[#937b80]">Demo imagery only. These are illustrative photographs, not verified images of Mama Nene’s Cakes products.</p></section>
 
-      {/* GALLERY */}
-      <section className="gallery-placeholder section-padding" id="gallery">
-        <div className="container gallery-placeholder-inner">
-          <span className="eyebrow">YOUR NEXT LOOK STARTS HERE</span>
+      <section id="prices" className="bg-[#f7eae5] px-6 py-24 md:px-10"><div className="mx-auto max-w-7xl"><div className="mn-reveal mx-auto mb-14 max-w-2xl text-center"><p className="mn-kicker">Simple starting prices</p><h2 className="mn-display mt-4 text-5xl md:text-7xl">The sweetest <em className="text-[#a4516a]">menu.</em></h2><p className="mt-6 text-sm leading-7 text-[#806a6e]">Browse the basic price list, then message us to confirm your design, date and final quotation.</p></div><div className="grid gap-6 md:grid-cols-2">{menus.map((menu, i) => <article key={menu.name} className="mn-card mn-reveal rounded-[26px] border border-[#ecd9d2] bg-white p-7 shadow-[0_12px_40px_#743c4b0a] sm:p-9"><div className="flex items-start justify-between gap-3"><div><p className="mn-kicker">0{i + 1} / THE MENU</p><h3 className="mn-display mt-3 text-4xl">{menu.name}</h3><p className="mt-2 text-sm text-[#8d777a]">{menu.description}</p></div><span className="mn-display text-3xl italic text-[#c08c9b]">✳</span></div><div className="my-7 h-px bg-[#f0e1dc]"/><div className="space-y-4">{menu.items.map(([label, price]) => <div key={label} className="flex items-center justify-between gap-4 text-[15px]"><span className="text-[#655358]">{label}</span><span className="font-bold text-[#743c4b]">{price}</span></div>)}</div><p className="mt-7 border-t border-[#f0e1dc] pt-5 text-xs leading-6 text-[#96767e]">{menu.note}</p><a href={whatsapp(`Hello Mama Nene's Cakes! I'd like to enquire about ${menu.name.toLowerCase()}. Please confirm the final price and availability.`)} target="_blank" rel="noopener noreferrer" className="mn-cta group mt-6 inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#743c4b] px-6 py-4 text-sm font-bold text-white">Enquire about this option <Arrow /></a></article>)}</div><p className="mt-8 text-center text-xs leading-6 text-[#896b71]">All prices in USD. Cake prices may change with design and complexity. Themed sheet cakes are an additional $5.</p></div></section>
 
-          <h2 className="section-heading">
-            Beauty in every detail.
-          </h2>
+      <section id="how-to-order" className="mx-auto max-w-7xl px-6 py-24 md:px-10"><div className="mn-reveal mx-auto max-w-2xl text-center"><p className="mn-kicker">How it works</p><h2 className="mn-display mt-4 text-5xl md:text-7xl">From idea to <em className="text-[#a4516a]">icing.</em></h2><p className="mt-5 text-sm leading-7 text-[#806a6e]">Ordering starts with a conversation.</p></div><div className="mt-14 grid gap-8 md:grid-cols-3">{[{ number: "01", title: "Choose your treat", body: "Browse our cakes, cupcake boxes, sheet cakes and bento cake boxes." },{ number: "02", title: "Share your vision", body: "Message your date, preferred size and any design inspiration on WhatsApp." },{ number: "03", title: "Confirm the details", body: "Discuss availability, design complexity and your final quote directly with Mama Nene’s Cakes." }].map((step) => <div key={step.number} className="mn-reveal border-t border-[#ddc4c6] pt-7"><span className="mn-display text-6xl italic text-[#c78b9b]">{step.number}</span><h3 className="mn-display mt-5 text-3xl">{step.title}</h3><p className="mt-3 text-sm leading-8 text-[#806a6e]">{step.body}</p></div>)}</div></section>
 
-          <p className="section-description">
-            We&apos;re preparing a showcase of Rue&apos;s Glam creations.
-            Contact us to enquire about your next beauty appointment.
-          </p>
+      <section className="bg-[#f9efea] px-6 py-24 md:px-10"><div className="mx-auto max-w-4xl"><div className="mn-reveal text-center"><p className="mn-kicker">Good to know</p><h2 className="mn-display mt-4 text-5xl md:text-6xl">A few sweet <em className="text-[#a4516a]">answers.</em></h2></div><div className="mt-12 divide-y divide-[#e4d0ca] border-y border-[#e4d0ca]">{faqs.map((faq, index) => <div key={faq.q}><button type="button" aria-expanded={openFaq === index} onClick={() => setOpenFaq(openFaq === index ? null : index)} className="flex w-full items-center justify-between gap-6 py-6 text-left"><span className="mn-display text-xl sm:text-2xl">{faq.q}</span><span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#a77b83] text-xl text-[#743c4b]">{openFaq === index ? "−" : "+"}</span></button>{openFaq === index && <p className="max-w-2xl pb-7 text-sm leading-8 text-[#806a6e]">{faq.a}</p>}</div>)}</div></div></section>
 
-          <a
-            href={whatsappLink}
-            target="_blank"
-            rel="noreferrer"
-            className="secondary-button"
-          >
-            Enquire on WhatsApp <FiArrowRight />
-          </a>
-        </div>
-      </section>
+      <section id="contact" className="mx-auto grid max-w-7xl gap-12 px-6 py-24 md:grid-cols-2 md:px-10"><div className="mn-reveal"><p className="mn-kicker">Let's make something sweet</p><h2 className="mn-display mt-4 text-5xl leading-tight md:text-7xl">Your next celebration <em className="text-[#a4516a]">starts here.</em></h2><p className="mt-7 max-w-md text-sm leading-8 text-[#806a6e]">Have a date in mind? Send a WhatsApp enquiry with the cake size, design and occasion. For urgent orders, please call directly.</p><div className="mt-8 space-y-3 text-sm"><p><strong>Phone:</strong> <a href={`tel:${phone}`} className="underline decoration-[#b88190] underline-offset-4">077 391 7813</a></p><p><strong>Email:</strong> <a href="mailto:rumbihunda@gmail.com" className="underline decoration-[#b88190] underline-offset-4">rumbihunda@gmail.com</a></p><p><strong>Location:</strong> 6 Starling Close, Helensvale, Harare, Zimbabwe</p></div></div><div className="mn-reveal rounded-[30px] bg-[#f7e7e2] p-8 sm:p-12"><span className="mn-display text-5xl text-[#a4516a]">♡</span><h3 className="mn-display mt-4 text-4xl">Let's talk cake.</h3><p className="mt-4 text-sm leading-8 text-[#806a6e]">Ready to enquire? Start on WhatsApp and tell us about your celebration.</p><a href={whatsapp("Hello Mama Nene's Cakes! I'd like to place an order. Cake type: ... Size: ... Required date: ... Design idea: ...")} target="_blank" rel="noopener noreferrer" className="mn-cta group mt-7 inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#743c4b] px-7 py-4 text-sm font-bold text-white">Chat on WhatsApp <Arrow diagonal /></a><div className="my-8 h-px bg-[#dfc6c2]"/><p className="text-xs font-bold uppercase tracking-[.18em] text-[#a4516a]">Last-minute / emergency orders</p><a href={`tel:${phone}`} className="mn-display mt-3 block text-3xl text-[#743c4b] sm:text-4xl">077 391 7813</a><p className="mt-2 text-xs text-[#90767b]">Please call directly for urgent requests.</p></div></section>
 
-      {/* FOOTER */}
-      <footer className="site-footer">
-        <div className="container footer-inner">
-          <div className="footer-main">
-            <div className="footer-brand-section">
-              <Link href="#home" className="footer-brand">
-                RUE&apos;S <span>GLAM</span>
-              </Link>
-
-              <p>
-                Enhancing your natural beauty with creativity,
-                elegance and professional care.
-              </p>
-
-              <div className="footer-socials">
-                <a
-                  href="https://www.instagram.com/"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Instagram"
-                >
-                  <FiInstagram />
-                </a>
-
-                <a
-                  href="https://www.facebook.com/"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Facebook"
-                >
-                  <FiFacebook />
-                </a>
-
-                <a
-                  href="https://www.tiktok.com/"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="TikTok"
-                >
-                  <FiMusic />
-                </a>
-
-                <a
-                  href={whatsappLink}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="WhatsApp"
-                >
-                  <FiMessageCircle />
-                </a>
-              </div>
-            </div>
-
-            <div className="footer-links">
-              <h3>Explore</h3>
-              <Link href="#home">Home</Link>
-              <Link href="#services">Our Services</Link>
-              <Link href="#about">About Us</Link>
-              <Link href="#gallery">Gallery</Link>
-            </div>
-
-            <div className="footer-contact">
-              <h3>Get in Touch</h3>
-              <p>Ready for your beauty transformation?</p>
-
-              <a
-                href={whatsappLink}
-                target="_blank"
-                rel="noreferrer"
-                className="footer-booking"
-              >
-                Book an Appointment <FiArrowRight />
-              </a>
-            </div>
-          </div>
-
-          <div className="footer-bottom">
-            <span>
-              © 2026 Rue&apos;s Glam. All rights reserved.
-            </span>
-
-            <span className="footer-credit">
-              Website crafted by <strong>Silent Programs</strong>
-            </span>
-          </div>
-        </div>
-      </footer>
-
-      {/* FLOATING BOOKING BUTTON */}
-      <a
-        href={whatsappLink}
-        target="_blank"
-        rel="noreferrer"
-        className="floating-book"
-        aria-label="Book an appointment on WhatsApp"
-      >
-        Book on WhatsApp <FiArrowRight />
-      </a>
+      <footer className="bg-[#392b30] px-6 py-12 text-white md:px-10"><div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-8"><div><p className="mn-display text-3xl">mama nene’s <span className="text-[#eab7c1]">✿</span></p><p className="mt-2 text-xs tracking-wider text-[#e2cbd0]">CAKES & CELEBRATIONS · HARARE</p></div><div className="flex flex-wrap gap-6 text-xs font-bold uppercase tracking-wider"><a href="#collections">Collections</a><a href="#gallery">Gallery</a><a href="#prices">Prices</a><a href="#contact">Contact</a></div><p className="text-xs text-[#dcc4c8]">© 2026 Mama Nene’s Cakes · Demo by Silent Programs</p></div></footer>
+      <a href={whatsapp("Hello Mama Nene's Cakes! I'd like to enquire about a cake order.")} target="_blank" rel="noopener noreferrer" className="mn-cta fixed bottom-5 right-5 z-50 rounded-full border-2 border-white bg-[#743c4b] px-5 py-3.5 text-xs font-bold text-white shadow-xl sm:px-7 sm:text-sm" aria-label="Order a cake on WhatsApp">WhatsApp order ↗</a>
     </main>
   );
 }

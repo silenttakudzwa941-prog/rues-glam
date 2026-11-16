@@ -1,20 +1,28 @@
+
 import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Rue's Glam | Beauty, Elegance & Confidence",
+  title: "Mama Nene's Cakes | Beautiful Cakes for Every Celebration",
   description:
-    "Discover professional nail artistry, makeup, wig installations, eyelash extensions and permanent eyebrow services at Rue's Glam.",
-  applicationName: "Rue's Glam",
+    "Discover beautiful celebration cakes, cupcakes, sheet cakes and bento cake boxes at Mama Nene's Cakes in Helensvale, Harare, Zimbabwe. Explore our cake prices and enquire about custom orders through WhatsApp.",
+  applicationName: "Mama Nene's Cakes",
   keywords: [
-    "Rue's Glam",
-    "nail artistry",
-    "professional makeup",
-    "wig installations",
-    "eyelash extensions",
-    "permanent eyebrows",
-    "bridal beauty",
+    "Mama Nene's Cakes",
+    "Mama Nenes Cakes",
+    "cakes in Harare",
+    "custom cakes Zimbabwe",
+    "birthday cakes Harare",
+    "celebration cakes",
+    "cupcakes Harare",
+    "sheet cakes",
+    "bento cakes",
+    "cake shop Helensvale",
   ],
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function RootLayout({
